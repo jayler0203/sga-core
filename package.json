@@ -1,6 +1,6 @@
 {
   "name": "sga-core",
-  "version": "1.1.0",
+  "version": "1.1.5",
   "main": "src/AuthTools.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,5 +12,10 @@
   "dependencies": {
     "express-validator": "7.0.1",
     "jsonwebtoken": "9.0.2"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jayler0203/sga-core"
   }
 }
