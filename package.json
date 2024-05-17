@@ -1,9 +1,20 @@
 {
   "name": "sga-core",
-  "version": "1.1.5",
-  "main": "src/AuthTools.js",
+  "version": "1.2.0",
+  "main": "dist/main.js",
+  "types": "dist/main.d.ts",
+  "files": [
+    "index.js",
+    "AuthTools.js",
+    "handleErrors.js",
+    "handleValidator.js",
+    "constants/ResponseMessages.js",
+    "constants/Scheme.js"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [],
   "author": "",
@@ -13,7 +24,13 @@
     "express-validator": "7.0.1",
     "jsonwebtoken": "9.0.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/node": "^20.12.12",
+    "express": "^4.19.2",
+    "typescript": "^5.4.5"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/jayler0203/sga-core"
