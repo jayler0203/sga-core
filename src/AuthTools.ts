@@ -1,7 +1,7 @@
 
 import crypto from 'node:crypto';
 import jwt, { JwtPayload } from "jsonwebtoken";
-import {Scheme} from "./constans/Scheme"
+import {Scheme} from "./constants/Scheme"
 /**
  * Módulo que proporciona herramientas de autenticación.
  * @module AuthTools
@@ -117,15 +117,13 @@ const AuthTools = {
      * @returns {string} El token JWT generado.
      */
 
-    createJWT: function(clientId: string, issuer: string, secret: string, subject: string,timeExp: string): string {
+    createJWT: function(clientId: string, issuer: string, secret: string,timeExp: string|number,rol:string) : string {
         const payload ={
-            iss:issuer,
-            sub: subject,
-            jti: crypto.randomUUID()
+            sub:clientId,
+            rol
         }
         const secretKey = this.getSigningKey(secret,clientId)
-        console.log(secretKey);
-        const token = jwt.sign(payload, secretKey,{expiresIn:timeExp,audience:subject});
+        const token = jwt.sign(payload, secretKey,{expiresIn:timeExp,issuer,jwtid:crypto.randomUUID(),});
         return token;
     },
     
@@ -134,16 +132,14 @@ const AuthTools = {
      * @memberof AuthTools
      * @param {string} secret - La clave secreta.
      * @param {string} clientID - El ID del cliente.
-     * @returns {string} La clave de firma.
+     * @returns {Buffer} La clave de firma.
      */
  
-    getSigningKey: function(secret: string, clientID: string): string {
+    getSigningKey: function(secret: string, clientID: string): Buffer {
         const concatString = secret + clientID;
         const base64String = this.StringToBase64(concatString)
         const keyBytes = Buffer.from(base64String, 'base64');
-        const signingKey = crypto.createHmac('sha256', keyBytes).digest('hex');
-    
-        return signingKey;
+        return keyBytes;
     },
     /**
      * Obtiene el token Bearer de una cadena de token completa.

@@ -8,8 +8,8 @@ const validateResults = (req, res, next) => {
         return next();
     }
     catch (error) {
-        const validationError = error;
-        res.status(403).send({ error: validationError.msg });
+        res.status(403);
+        res.send({ erorres: error.array() });
     }
 };
 exports.validateResults = validateResults;

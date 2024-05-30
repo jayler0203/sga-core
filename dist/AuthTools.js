@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthTools = void 0;
 const node_crypto_1 = __importDefault(require("node:crypto"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const Scheme_1 = require("./constans/Scheme");
+const Scheme_1 = require("./constants/Scheme");
 /**
  * Módulo que proporciona herramientas de autenticación.
  * @module AuthTools
@@ -118,15 +118,13 @@ const AuthTools = {
  * @param {string} timeExp - El tiempo de expiración del token.
  * @returns {string} El token JWT generado.
  */
-    createJWT: function (clientId, issuer, secret, subject, timeExp) {
+    createJWT: function (clientId, issuer, secret, timeExp, rol) {
         const payload = {
-            iss: issuer,
-            sub: subject,
-            jti: node_crypto_1.default.randomUUID()
+            sub: clientId,
+            rol
         };
         const secretKey = this.getSigningKey(secret, clientId);
-        console.log(secretKey);
-        const token = jsonwebtoken_1.default.sign(payload, secretKey, { expiresIn: timeExp, audience: subject });
+        const token = jsonwebtoken_1.default.sign(payload, secretKey, { expiresIn: timeExp, issuer, jwtid: node_crypto_1.default.randomUUID(), });
         return token;
     },
     /**
@@ -134,14 +132,13 @@ const AuthTools = {
      * @memberof AuthTools
      * @param {string} secret - La clave secreta.
      * @param {string} clientID - El ID del cliente.
-     * @returns {string} La clave de firma.
+     * @returns {Buffer} La clave de firma.
      */
     getSigningKey: function (secret, clientID) {
         const concatString = secret + clientID;
         const base64String = this.StringToBase64(concatString);
         const keyBytes = Buffer.from(base64String, 'base64');
-        const signingKey = node_crypto_1.default.createHmac('sha256', keyBytes).digest('hex');
-        return signingKey;
+        return keyBytes;
     },
     /**
      * Obtiene el token Bearer de una cadena de token completa.

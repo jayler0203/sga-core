@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import { JwtPayload } from "jsonwebtoken";
 /**
  * Módulo que proporciona herramientas de autenticación.
@@ -77,15 +78,15 @@ declare const AuthTools: {
  * @param {string} timeExp - El tiempo de expiración del token.
  * @returns {string} El token JWT generado.
  */
-    createJWT: (clientId: string, issuer: string, secret: string, subject: string, timeExp: string) => string;
+    createJWT: (clientId: string, issuer: string, secret: string, timeExp: string | number, rol: string) => string;
     /**
      * Obtiene la clave de firma para JWT.
      * @memberof AuthTools
      * @param {string} secret - La clave secreta.
      * @param {string} clientID - El ID del cliente.
-     * @returns {string} La clave de firma.
+     * @returns {Buffer} La clave de firma.
      */
-    getSigningKey: (secret: string, clientID: string) => string;
+    getSigningKey: (secret: string, clientID: string) => Buffer;
     /**
      * Obtiene el token Bearer de una cadena de token completa.
      * @memberof AuthTools

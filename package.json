@@ -1,15 +1,10 @@
 {
   "name": "sga-core",
-  "version": "1.2.0",
+  "version": "1.2.7",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
   "files": [
-    "index.js",
-    "AuthTools.js",
-    "handleErrors.js",
-    "handleValidator.js",
-    "constants/ResponseMessages.js",
-    "constants/Scheme.js"
+    "dist/*"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
